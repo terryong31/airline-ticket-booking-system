@@ -4,6 +4,10 @@ To run this project you will need mysql either from XAMPP or whatever software t
 Have fun exploring it. 
 Will further update it if I have free time.
 
+Admin default ID and password: 
+ID: admin
+Password: admin
+
 Steps to run:
 1) Run XAMPP or other mysql software and make sure the address is correct
 2) Install the necessary modules (IPython, sqlalchemy, pandas, and mysql.connector)
