@@ -80,12 +80,12 @@ def admin_login(cursor, connection, engine):
     return None
 
 def user_login(mycursor, mydb, engine):
-    print('\nHi, welcome to AirAsia.')
-    print('Would you like to')
-    print('(1) Register an account')
-    print('(2) Login with an existing account')
-    print('(3) Exit')
     while True:
+        print('\nHi, welcome to AirAsia.')
+        print('Would you like to')
+        print('(1) Register an account')
+        print('(2) Login with an existing account')
+        print('(3) Exit')
         x = input('Enter your selection: ')
         match x:
             case '1':
@@ -99,16 +99,17 @@ def user_login(mycursor, mydb, engine):
                     search_user_id = "SELECT userid, user_password, user_first_name, user_last_name FROM user WHERE userid= %s"
                     mycursor.execute(search_user_id, (userid,))
                     userinfo = mycursor.fetchone()
-                    if userid == userinfo[0] and password == userinfo[1]:
-                        print('Login successful! Directing...')
-                        user = User(userinfo[0], userinfo[2], userinfo[3], mycursor, mydb, engine)
-                        status = user.user_page()
-                        return status
-                    else:
+                    try:
+                        if userid == userinfo[0] and password == userinfo[1]:
+                            print('Login successful! Directing...')
+                            user = User(userinfo[0], userinfo[2], userinfo[3], mycursor, mydb, engine)
+                            status = user.user_page()
+                            return status
+                    except:
                         attempts -= 1
                         print(f'\n    Wrong user username or password! Please try again. You have {str(attempts)} attempt(s) left   \n')
-                    print('Too many attempts. Please try again later.\n')
-                    return None
+                print('Too many failed attempts. Returning to main menu.\n\n')
+                return None
             case '3':
                 print('\n')
                 return None
