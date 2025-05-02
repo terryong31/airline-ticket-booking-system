@@ -65,10 +65,10 @@ def admin_login(cursor, connection, engine):
     while attempts > 0:
         admin_id = input('Admin username: ')
         password = input('Enter password: ')
-        query = "SELECT adminid, admin_password, admin_name FROM admin WHERE adminid= %s"
-        mycursor.execute(query, (admin_id,))
+        query = "SELECT adminid, admin_password, admin_name FROM admin WHERE adminid = %s AND password = %s"
+        mycursor.execute(query, (admin_id, password,))
         admininfo = mycursor.fetchone()
-        if admininfo and password == admininfo[1]:
+        if admin_id == admininfo[0] and password == admininfo[1]:
             print('Login successful! Redirecting...')
             admin = Admin(admin_id, admininfo[2], cursor, connection, engine)
             status = admin.admin_page()
